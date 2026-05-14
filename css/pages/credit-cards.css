@@ -1,0 +1,164 @@
+.my-cards__carousel {
+  display: flex;
+  gap: var(--space-lg);
+  overflow-x: auto;
+  overflow-y: visible;
+  padding-bottom: var(--space-sm);
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; 
+  touch-action: pan-x;
+}
+
+.my-cards__carousel::-webkit-scrollbar {
+  display: none;
+}
+
+.my-cards__carousel .credit-card {
+  scroll-snap-align: start;
+  width: 320px;
+  min-width: 280px;
+  flex-shrink: 0;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+
+.donut-chart-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.donut-chart-wrap canvas {
+  max-width: 200px;
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm) var(--space-lg);
+  justify-content: center;
+}
+
+.chart-legend__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.chart-legend__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.add-setting-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-lg);
+  margin-top: var(--space-lg);
+}
+
+.add-card-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  line-height: 1.6;
+  margin-bottom: var(--space-lg);
+}
+
+.add-card-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.add-card-form .form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+.add-card-form .btn--primary {
+  width: auto !important;
+  align-self: flex-start !important;
+  padding: 12px var(--space-xl);
+}
+
+.card-list-row {
+  overflow: visible !important;
+  position: relative;
+  display: grid !important;
+  grid-template-columns: 44px 1fr 1fr 1.4fr 1fr auto !important;
+  align-items: center;
+  gap: var(--space-md);
+  padding: var(--space-md) !important;
+}
+
+.card-list-row .card-list-row__col {
+  flex: unset !important;
+  min-width: 0;
+}
+
+.card-list-row .btn,
+.card-list-row .btn--primary,
+.card-list-row .btn--outline {
+  width: auto !important;
+  flex-shrink: 0 !important;
+  position: relative !important;
+  z-index: 2 !important;
+  pointer-events: auto !important;
+}
+
+@media (max-width: 1024px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .add-setting-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .add-card-form .form-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-cards__carousel {
+    gap: var(--space-md) !important;
+    padding-right: var(--space-md);
+    touch-action: pan-x;
+  }
+
+  .my-cards__carousel .credit-card {
+    width: calc(100vw - 64px) !important;
+    min-width: 260px !important;
+    max-width: 320px !important;
+    flex-shrink: 0 !important;
+    scroll-snap-align: start;
+  }
+
+  .card-list-row {
+    display: flex !important;
+    grid-template-columns: unset !important;
+    gap: var(--space-sm) !important;
+    padding: 12px 8px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .my-cards__carousel .credit-card {
+    width: calc(100vw - 48px) !important;
+  }
+}

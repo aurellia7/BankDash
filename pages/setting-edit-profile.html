@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Setting — BankDash</title>
+
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/global.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/pages/setting.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <style>
+    .date-picker-wrapper {
+      position: relative;
+    }
+
+    .date-picker-display {
+      width: 100%;
+      padding: 14px var(--space-md);
+      border: 1.5px solid var(--color-border);
+      border-radius: var(--radius-md);
+      font-size: var(--font-size-base);
+      color: var(--color-primary, #2D60FF);
+      background-color: var(--color-white);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      user-select: none;
+      transition: border-color 0.2s;
+    }
+
+    .date-picker-display:hover,
+    .date-picker-display.open {
+      border-color: var(--color-primary, #2D60FF);
+    }
+
+    .date-picker-display svg {
+      color: var(--color-primary, #2D60FF);
+      flex-shrink: 0;
+    }
+
+    .date-picker-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      right: 0;
+      background: var(--color-white, #fff);
+      border: 1.5px solid var(--color-border, #E6EFF5);
+      border-radius: var(--radius-md, 12px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+      z-index: 100;
+      padding: 16px;
+    }
+
+    .date-picker-dropdown.open {
+      display: block;
+    }
+
+    .date-picker-selects {
+      display: grid;
+      grid-template-columns: 2fr 1.5fr 1.5fr;
+      gap: 8px;
+    }
+
+    .date-picker-selects select {
+      padding: 10px 12px;
+      border: 1.5px solid var(--color-border, #E6EFF5);
+      border-radius: 8px;
+      font-size: var(--font-size-sm, 13px);
+      color: var(--color-text-primary, #232323);
+      background: var(--color-white, #fff);
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23718EBF' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      background-size: 14px;
+      padding-right: 28px;
+    }
+
+    .date-picker-selects select:focus {
+      outline: none;
+      border-color: var(--color-primary, #2D60FF);
+    }
+
+    .date-picker-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .date-picker-actions button {
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-size: var(--font-size-sm, 13px);
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+
+    .date-picker-cancel {
+      background: var(--color-bg, #F5F7FA);
+      color: var(--color-text-secondary, #718EBF);
+    }
+
+    .date-picker-apply {
+      background: var(--color-primary, #2D60FF);
+      color: white;
+    }
+  </style>
+</head>
+
+<body data-page="setting" data-title="Setting">
+
+  <div class="app-shell">
+    <div id="sidebar-mount"></div>
+
+    <div class="main-content">
+      <div id="header-mount"></div>
+
+      <main class="page-content" id="main-content">
+
+        <div class="setting-card">
+
+          <div class="tabs" role="tablist" data-tabs-group="setting-tabs">
+            <button class="tabs__item active" role="tab" aria-selected="true" aria-controls="edit-profile" data-tab="edit-profile">Edit Profile</button>
+            <button class="tabs__item" role="tab" aria-selected="false" aria-controls="preference" data-tab="preference">Preference</button>
+            <button class="tabs__item" role="tab" aria-selected="false" aria-controls="security" data-tab="security">Security</button>
+          </div>
+
+          <div data-tabs-panels="setting-tabs">
+
+            <div class="tab-panel active" id="edit-profile" role="tabpanel">
+
+              <div class="edit-profile-layout">
+
+                <div class="edit-profile-avatar">
+                  <div class="avatar-upload">
+                    <img class="avatar-upload__img"
+                         src="../assets/images/avatar.jpg"
+                         onerror="this.src='https://ui-avatars.com/api/?name=Charlene+Reed&background=4C49ED&color=fff&size=100'"
+                         alt="Charlene Reed profile photo">
+                    <button class="avatar-upload__btn" aria-label="Change profile photo" type="button">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+
+                <div class="edit-profile-form">
+                  <div class="form-grid">
+
+                    <div class="form-group">
+                      <label class="form-label" for="your-name">Your Name</label>
+                      <input type="text" id="your-name" class="form-input" placeholder="Your Name">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="username">User Name</label>
+                      <input type="text" id="username" class="form-input" placeholder="User Name">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="email">Email</label>
+                      <input type="email" id="email" class="form-input" placeholder="Email">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="password">Password</label>
+                      <input type="password" id="password" class="form-input" placeholder="Password">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label">Date of Birth</label>
+                      <div class="date-picker-wrapper" id="dob-wrapper">
+                        <div class="date-picker-display" id="dob-display" tabindex="0" role="button" aria-haspopup="true" aria-expanded="false">
+                          <span id="dob-text" style="color:#718EBF;">Select Date of Birth</span>
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <path d="M6 9l6 6 6-6"/>
+                          </svg>
+                        </div>
+                        <div class="date-picker-dropdown" id="dob-dropdown">
+                          <div class="date-picker-selects">
+                            <select id="dob-month">
+                              <option value="">Month</option>
+                              <option value="1">January</option>
+                              <option value="2">February</option>
+                              <option value="3">March</option>
+                              <option value="4">April</option>
+                              <option value="5">May</option>
+                              <option value="6">June</option>
+                              <option value="7">July</option>
+                              <option value="8">August</option>
+                              <option value="9">September</option>
+                              <option value="10">October</option>
+                              <option value="11">November</option>
+                              <option value="12">December</option>
+                            </select>
+                            <select id="dob-day">
+                              <option value="">Day</option>
+                            </select>
+                            <select id="dob-year">
+                              <option value="">Year</option>
+                            </select>
+                          </div>
+                          <div class="date-picker-actions">
+                            <button class="date-picker-cancel" id="dob-cancel">Cancel</button>
+                            <button class="date-picker-apply" id="dob-apply">Apply</button>
+                          </div>
+                        </div>
+                        <input type="hidden" id="date-of-birth" name="date-of-birth">
+                      </div>
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="present-address">Present Address</label>
+                      <input type="text" id="present-address" class="form-input" placeholder="Present Address">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="permanent-address">Permanent Address</label>
+                      <input type="text" id="permanent-address" class="form-input" placeholder="Permanent Address">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="city">City</label>
+                      <input type="text" id="city" class="form-input" placeholder="City">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="postal-code">Postal Code</label>
+                      <input type="text" id="postal-code" class="form-input" placeholder="Postal Code">
+                    </div>
+
+                    <div class="form-group">
+                      <label class="form-label" for="country">Country</label>
+                      <input type="text" id="country" class="form-input" placeholder="Country">
+                    </div>
+
+                  </div>
+
+                  <div class="form-save-row">
+                    <button class="btn btn--primary" type="button">Save</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <div class="tab-panel" id="preference" role="tabpanel" hidden>
+              <div class="pref-grid">
+                <div class="form-group">
+                  <label class="form-label" for="currency">Currency</label>
+                  <input type="text" id="currency" class="form-input" value="USD" placeholder="Currency">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="timezone">Time Zone</label>
+                  <input type="text" id="timezone" class="form-input" value="(GMT-12:00) International Date Line West" placeholder="Time Zone">
+                </div>
+              </div>
+              <div class="notification-section">
+                <div class="form-section-title">Notification</div>
+                <div class="notification-list">
+                  <label class="toggle">
+                    <input type="checkbox" class="toggle__input" checked>
+                    <div class="toggle__track"><div class="toggle__thumb"></div></div>
+                    <span class="toggle__label">I send or receive digita currency</span>
+                  </label>
+                  <label class="toggle">
+                    <input type="checkbox" class="toggle__input">
+                    <div class="toggle__track"><div class="toggle__thumb"></div></div>
+                    <span class="toggle__label">I receive merchant order</span>
+                  </label>
+                  <label class="toggle">
+                    <input type="checkbox" class="toggle__input" checked>
+                    <div class="toggle__track"><div class="toggle__thumb"></div></div>
+                    <span class="toggle__label">There are recommendation for my account</span>
+                  </label>
+                </div>
+              </div>
+              <div class="form-save-row">
+                <button class="btn btn--primary" type="button">Save</button>
+              </div>
+            </div>
+
+            <div class="tab-panel" id="security" role="tabpanel" hidden>
+              <div class="security-section">
+                <div class="security-section__title">Two-factor Authentication</div>
+                <div class="security-toggle-row">
+                  <label class="toggle">
+                    <input type="checkbox" class="toggle__input" checked>
+                    <div class="toggle__track"><div class="toggle__thumb"></div></div>
+                  </label>
+                  <span style="font-size:var(--font-size-sm); color:var(--color-text-secondary);">Enable or disable two factor authentication</span>
+                </div>
+              </div>
+              <div class="security-section">
+                <div class="security-section__title">Change Password</div>
+                <div class="security-form">
+                  <div class="form-group">
+                    <label class="form-label" for="current-password">Current Password</label>
+                    <input type="password" id="current-password" class="form-input" placeholder="Current Password">
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="new-password">New Password</label>
+                    <input type="password" id="new-password" class="form-input" placeholder="New Password">
+                  </div>
+                </div>
+              </div>
+              <div class="form-save-row">
+                <button class="btn btn--primary" type="button">Save</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="../js/layout.js"></script>
+  <script src="../js/tabs.js"></script>
+  <script>
+    const display   = document.getElementById('dob-display');
+    const dropdown  = document.getElementById('dob-dropdown');
+    const dobText   = document.getElementById('dob-text');
+    const dobInput  = document.getElementById('date-of-birth');
+    const selMonth  = document.getElementById('dob-month');
+    const selDay    = document.getElementById('dob-day');
+    const selYear   = document.getElementById('dob-year');
+    const btnCancel = document.getElementById('dob-cancel');
+    const btnApply  = document.getElementById('dob-apply');
+
+    const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+    const currentYear = new Date().getFullYear();
+    for (let y = currentYear; y >= 1940; y--) {
+      const opt = document.createElement('option');
+      opt.value = y;
+      opt.textContent = y;
+      selYear.appendChild(opt);
+    }
+
+    function populateDays(month, year) {
+      const current = selDay.value;
+      selDay.innerHTML = '<option value="">Day</option>';
+      const days = new Date(year || 2000, month || 12, 0).getDate();
+      for (let d = 1; d <= days; d++) {
+        const opt = document.createElement('option');
+        opt.value = d;
+        opt.textContent = d;
+        selDay.appendChild(opt);
+      }
+      if (current) selDay.value = current;
+    }
+
+    populateDays();
+
+    selMonth.addEventListener('change', () => populateDays(selMonth.value, selYear.value));
+    selYear.addEventListener('change',  () => populateDays(selMonth.value, selYear.value));
+
+    display.addEventListener('click', () => {
+      const isOpen = dropdown.classList.toggle('open');
+      display.classList.toggle('open', isOpen);
+      display.setAttribute('aria-expanded', isOpen);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!document.getElementById('dob-wrapper').contains(e.target)) {
+        dropdown.classList.remove('open');
+        display.classList.remove('open');
+        display.setAttribute('aria-expanded', false);
+      }
+    });
+
+    btnCancel.addEventListener('click', (e) => {
+      e.stopPropagation();
+      dropdown.classList.remove('open');
+      display.classList.remove('open');
+    });
+
+    btnApply.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const m = selMonth.value;
+      const d = selDay.value;
+      const y = selYear.value;
+
+      if (m && d && y) {
+        const label = `${d} ${months[m - 1]} ${y}`;
+        dobText.textContent = label;
+        dobText.style.color = 'var(--color-primary, #2D60FF)';
+        dobInput.value = `${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+        dropdown.classList.remove('open');
+        display.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>
